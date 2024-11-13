@@ -29,7 +29,7 @@ This script automatically watches for Bolt.new project ZIP files and syncs their
 
    ```ini
    # ZIP_PATTERN=project-bolt-*.zip  # Change the zip file pattern to watch
-   # SYNCED_DIR=synced              # Change the directory for processed files
+   # SYNCED_DIR=bolt_synced              # Change the directory for processed files
    ```
 
 3. Make the script executable:
@@ -38,13 +38,13 @@ This script automatically watches for Bolt.new project ZIP files and syncs their
    chmod +x auto-bolt-sync.sh
    ```
 
-4. Add the synced directory to .gitignore in your target repository:
+4. Add the bolt_synced directory to .gitignore in your target repository:
    ```bash
-   echo "synced/" >> /path/to/your/git/repo/.gitignore
+   echo "bolt_synced/" >> /path/to/your/git/repo/.gitignore
    ```
    If using the current directory (TARGET_REPO=.), simply run:
    ```bash
-   echo "synced/" >> .gitignore
+   echo "bolt_synced/" >> .gitignore
    ```
    If .gitignore doesn't exist, this will create it. If it does exist, it will append the line.
 
@@ -58,7 +58,7 @@ This script automatically watches for Bolt.new project ZIP files and syncs their
 
 2. The script will:
    - Watch for files matching `project-bolt-*.zip` in the script's directory
-   - Create a `synced` directory if it doesn't exist
+   - Create a `bolt_synced` directory if it doesn't exist
    - Process any matching ZIP files it finds
 
 ## How It Works
@@ -69,15 +69,15 @@ When a matching ZIP file is found:
 2. Files from the `project` directory inside the ZIP are copied to your target repository
 3. Changes are committed with message "bolt.new changes sync YYYYMMDDHHMMSS"
 4. Changes are pushed to the remote repository
-5. The ZIP file is moved to the `synced` directory
+5. The ZIP file is moved to the `bolt_synced` directory
 
 Important notes:
 
 - The ZIP file must contain a `project` directory
 - Files from the `project` directory will overwrite existing files in the repository
-- If no changes are detected, the ZIP file is still moved to `synced`
+- If no changes are detected, the ZIP file is still moved to `bolt_synced`
 - The script continues running until you stop it with Ctrl+C
-- The `synced` directory is ignored by git (via .gitignore)
+- The `bolt_synced` directory is ignored by git (via .gitignore)
 
 ## Directory Structure
 
@@ -85,10 +85,10 @@ If running in the same directory as the git repository (TARGET_REPO=.):
 
 ```
 your-git-repo/
-├── .gitignore              # Contains "synced/"
+├── .gitignore              # Contains "bolt_synced/"
 ├── auto-bolt-sync.sh
 ├── auto-bolt-sync-config.ini
-├── synced/                 # Created automatically (git-ignored)
+├── bolt_synced/                 # Created automatically (git-ignored)
 │   └── (processed zip files)
 └── (your repository files)
 ```
@@ -99,11 +99,11 @@ If running in a separate directory:
 working-directory/          # Where the script runs
 ├── auto-bolt-sync.sh
 ├── auto-bolt-sync-config.ini
-└── synced/                 # Created automatically
+└── bolt_synced/                 # Created automatically
     └── (processed zip files)
 
 /path/to/your/git/repo/    # Target repository
-├── .gitignore             # Contains "synced/"
+├── .gitignore             # Contains "bolt_synced/"
 └── (your repository files)
 ```
 
@@ -139,12 +139,12 @@ working-directory/          # Where the script runs
      - Check permissions on the target directory
 
 4. If processed files are showing in git status:
-   - Verify the `synced/` line is in your .gitignore
+   - Verify the `bolt_synced/` line is in your .gitignore
    - If you added the line after creating the directory, run:
      ```bash
      cd /path/to/your/git/repo  # Change to your target repo
-     git rm -r --cached synced/
-     git commit -m "Remove synced directory from git tracking"
+     git rm -r --cached bolt_synced/
+     git commit -m "Remove bolt_synced directory from git tracking"
      ```
 
 ## Stopping the Script

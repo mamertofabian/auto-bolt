@@ -79,10 +79,10 @@ process_zip() {
     if ! git commit -m "bolt.new changes sync $timestamp"; then
         echo "No changes to commit for $zip_file"
         cd "$SCRIPT_DIR"
-        # Move the file to synced directory even if there are no changes
+        # Move the file to bolt_synced directory even if there are no changes
         mkdir -p "$SYNCED_DIR"
         mv "$zip_file" "$SYNCED_DIR/"
-        echo "Moved $zip_file to synced directory (no changes detected)"
+        echo "Moved $zip_file to bolt_synced directory (no changes detected)"
         return 0
     fi
     
@@ -96,7 +96,7 @@ process_zip() {
     # Return to script directory
     cd "$SCRIPT_DIR"
     
-    # Move zip file to synced directory
+    # Move zip file to bolt_synced directory
     mkdir -p "$SYNCED_DIR"
     mv "$zip_file" "$SYNCED_DIR/"
     
@@ -108,7 +108,7 @@ process_zip() {
 echo "Loading configuration..."
 load_config
 
-# Create synced directory if it doesn't exist
+# Create bolt_synced directory if it doesn't exist
 mkdir -p "$SYNCED_DIR"
 
 echo "Watching for $ZIP_PATTERN files..."
