@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Default configuration values
-CONFIG_FILE="auto-bolt-sync.ini"
+CONFIG_FILE="auto-bolt-sync-config.ini"
 ZIP_PATTERN="project-bolt-*.zip"
 SYNCED_DIR="bolt_synced"
 
